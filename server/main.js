@@ -1,11 +1,8 @@
-const server = require("http");
+const server = require("http").createServer();
 const io     = require("socket.io")(server);
 const fs     = require("fs");
 
-let app = server.createServer();
-
-app.listen(3000);
-io.listen(app);
+server.listen(3000);
 
 let gState = {
     pCount: 0,
@@ -40,7 +37,7 @@ io.on("connection", (socket) => {
     socket.on("fetchState", (event, data) => {
         
         console.log("fetch state...");
-        io.emit("updateState", "connected", gState);
+        socket.emit("updateState", "connected", gState);
     
     });
 
